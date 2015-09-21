@@ -96,4 +96,16 @@ var imageEls = document.getElementsByTagName("img");
 
        var moon = document.createElement("div");
  moon.className = 'moon';
- document.body.appendChild(moon); 
+ document.body.appendChild(moon);
+
+
+
+ /// работащщий код для теста просто проверил имена им(забивает в форму озыва содержание текта по клику)
+
+ var reviewName = document.getElementById("review-name")
+ var checkReviewName = function(){
+    var sName = document.getElementById("review-name").value;
+    sReview.value += sName;
+   };
+
+   reviewName.addEventListener("click", checkReviewName);
