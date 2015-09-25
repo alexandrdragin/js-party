@@ -1,0 +1,52 @@
+ohnoes.style.width = (parseFloat(ohnoes.style.width) + 1) + "px";
+
+//
+
+// Step 1. What element do we want to animate?
+  var countdown = document.getElementById("countdown");
+  // Step 2. What function will change it each time?
+  var countItDown = function() {
+    var currentTime = parseFloat(countdown.textContent);
+    if (currentTime > 0) {
+       countdown.textContent = currentTime - 1;
+    } else {
+        window.clearInterval(timer);
+    }
+
+  };
+  // Step 3: Call that on an interval
+  var timer = window.setInterval(countItDown, 1000);
+
+
+
+
+
+var catEl = document.getElementById("cat");
+cat.style.left = "100px";
+
+var startTime = new Date().getTime();
+var walkTheCat = function() {
+    var currTime = new Date().getTime();
+    var secondsElapsed = ((currTime - startTime)/1000);
+    var newLeft = (((currTime - startTime)/1000) * 50);
+    catEl.style.left = newLeft + "px"
+    window.requestAnimationFrame(walkTheCat);
+};
+walkTheCat();
+
+
+@keyframes getbigger {
+            from {
+                width: 50px;
+            }
+
+            to {
+                width: 300px;
+            }
+        }
+
+        #ohnoes {
+            animation-name: getbigger;
+            animation-duration: 3s;
+            /* vendor prefixes */
+        }
