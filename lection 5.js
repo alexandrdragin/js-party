@@ -29,9 +29,28 @@ pageNumber = pageNumber || 0;
    что происходит
  })
 
-
-
  ////////////////////////////////
+
+function isNextPageAvailble() {
+    return currentPage < Math.ceil(reviews.length / pageSize);
+}
+
+function isAtTheBottom() {
+  var gap = 100;
+  // проверяем элемент относительно вью порта
+  return reviewsContainer.getBoundingClientRect().bottom - gap <= window.innerHeight;
+}
+
+function initScroll(){
+  window.addEventListener('scroll', function(){
+    if(isAtTheBottom() && isNextPageAvailble()){
+      loadingReviews(currentReviews , currentPage++, false)
+    }
+  });
+}
+
+
+ /////////
 
 
  'use strict';
@@ -74,16 +93,21 @@ pageNumber = pageNumber || 0;
 
    var reviews;
    var currentPage = 0;
+   var currentReviews;
 
    reviewForm.classList.remove('invisible');
 
-   function loadingReviews(reviews, pageNumber) {
+   function loadingReviews(reviews, pageNumber, replace) {
+     // проверям тип переменной + тернарный оператор(что делать если выполняться:нет;)
+     replace = typeof replace !=='underfined' ? replace : true;
      // нормализация документа(горантирует содержание)
      pageNumber = pageNumber || 0;
 
-     reviewContainer.classList.remove('invisible');
-     // чистим контейнер
-     reviewContainer.innerHTML = '';
+     if (replace) {
+       reviewContainer.classList.remove('invisible');
+       // чистим контейнер
+       reviewContainer.innerHTML = '';
+     }
 
      // выбираем размер страницы
      var reviewsFrom = pageNumber * pageSize;
@@ -275,18 +299,19 @@ pageNumber = pageNumber || 0;
      filtersElements.addEventListener('click', function(evt) {
        var clickedFilter = evt.target;
        setActiveFilter(clickedFilter.id);
-       // и чекед переставляет местами
-       document.querySelector('.reviews-filter-item.checked').setAttribute('checked', false);
-       document.querySelector('input[name="reviews"]').setAttribute('checked', false);
-       clickedFilter.setAttribute('checked', true);
      });
    }
 
    //  функция включающая сортировку берет список ревью фильтурет по правилам
    function setActiveFilter(filterID) {
+     /*
      var filteredReviews = filterReviews(reviews, filterID);
      //  возвращаем и отрисовываем
-     loadingReviews(filteredReviews, currentPage);
+     loadingReviews(filteredReviews, currentPage, true);
+     */
+     currentReviews = filterReviews(reviews, filterID);
+     currentPage = 0;
+     loadingReviews(currentReviews, currentPage, true);
    }
 
    startFilters();
@@ -304,65 +329,3 @@ pageNumber = pageNumber || 0;
    });
 
  })();
-
- /*
- <form class="reviews-filter" action="index.html" method="get">
-   <input type="radio" name="reviews" id="reviews-all" value="reviews-all" checked><label for="reviews-all" class="reviews-filter-item"> Все</label>
-   <input type="radio" name="reviews" id="reviews-recent" value="reviews-recent"><label for="reviews-recent" class="reviews-filter-item"> Недавние</label>
-   <input type="radio" name="reviews" id="reviews-good" value="reviews-good"><label for="reviews-good" class="reviews-filter-item"> Хорошие</label>
-   <input type="radio" name="reviews" id="reviews-bad" value="reviews-bad"><label for="reviews-bad" class="reviews-filter-item"> Плохие</label>
-   <input type="radio" name="reviews" id="reviews-popular" value="reviews-popular"><label for="reviews-popular" class="reviews-filter-item"> Популярные</label>
-
-
- /*
- Доработайте модуль js/reviews.js:
- +Отключите загрузку данных из файла data/reviews.js убрав подключение этого скрипта из index.html.
- +Загрузите данные из файла data/reviews.json по XMLHttpRequest.
- +Пока длится загрузка файла, покажите прелоадер, добавив класс .reviews-list-loading блоку .reviews.
- +Когда загрузка закончится, уберите прелоадер и покажите список отзывов, как в предыдущем задании.
- +Если загрузка закончится неудачно (ошибкой сервера или таймаутом), покажите предупреждение об ошибке, добавив блоку .reviews класс reviews-load-failure.
-
- Напишите обработчики событий для фильтров, так, чтобы они фильтровали загруженный список отзывов следующим образом:
-   Все — показывает список отзывов в таком виде, в котором он был загружен.
-   Недавние — показывает список отзывов, оставленных за последние полгода, отсортированных по убыванию даты (поле date).
-   Хорошие — с рейтингом не ниже 3, отсортированные по убыванию рейтинга (поле rating).
-   Плохие — с рейтингом не выше 2, отсортированные по возрастанию рейтинга.
-   Популярные — отсортированные по убыванию оценки отзыва (поле reviewRating).
-
- ---------------------
- Задача
-
- Доработайте модуль js/reviews.js:
-   Перепишите функцию вывода списка отзывов таким образом, чтобы она отрисовывала не все доступные изображения, а постранично:
-   Каждая страница состоит максимум из 3 отзывов (последняя может содержать меньше).
-   Сделайте так, чтобы функция могла работать в двух режимах: добавления страницы и перезаписи содержимого контейнера.
-   Добавьте обработчик клика по кнопке "Показать еще", который будет показывать следующую страницу отзывов.
-   Перепишите функцию, которая устанавливает обработчики событий на клики по фильтрам с использованием делегирования.
-   После фильтрации должна показываться первая страница.
-   После переключения фильтра, выбранное значение должно сохраняться в localStorage и использоваться как значение по умолчанию при следующей загрузке.
-
-
- ------
-
- Первая задача
-
- Создайте модуль js/game_demo.js
- Добавьте обработчик события scroll у объекта window, который будет изменять свойство style.backgroundPosition у блока .header-clouds (эффект параллакса).
- Оптимизируйте обработчик скролла:
-   Если блок .header-clouds находится вне видимости, не производите вычисления background-position. Для определения видимости используйте Element.getBoundingClientRect.
-   Оптимизируйте обработчик события scroll с помощью таймаута, который срабатывает каждые 100 миллисекунд и испускает кастомное событие «исчезновения блока с облаками» из поля зрения.
-   ! Смещение для параллакса должно пересчитываться не каждые 100 миллисекунд, а на каждое изменение скролла, оптимизация касается только проверки видимости блока с облаками.
-   Добавьте обработчик события, отключающий параллакс, реагирующий на событие «исчезновения блока с облаками» из поля зрения.
-   Пример того, как могут вести себя облака при прокрутке. Вы можете использовать любую функцию для изменения позиции фона при скролле, главное, чтобы облака двигались.
-
-   Создайте модуль js/gallery.js и реализуйте в нем базовый функционал для фотогалереи.
-
- Добавьте с помощью делегирования обработчик кликов по фотографиям в галерее, к
- оторый убирает класс invisible у блока .overlay-gallery.
- Когда блок .overlay-gallery появляется, должен добавляться обработчик клавиатурных событий:
- Нажатие на Esc должно закрывать блок.
- Нажатия на стрелки влево и вправо должны вызывать функции переключения слайдов галереи.
- Сами функции пока что реализовывать не нужно, достаточно чтобы эти функции выводили в консоль направление переключения.
- Добавьте обработчик клика по крестику в блоке .overlay-gallery-close, который будет скрывать этот блок.
- Когда блок .gallery-overlay скрывается, обработчики событий должны удаляться.
- */
