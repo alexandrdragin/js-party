@@ -39,6 +39,21 @@
 
   reviewForm.classList.remove('invisible');
 
+  /**
+   * Список отрисованных ревью. Используется для обращения к каждому
+   * из ревью для удаления его со страницы.
+   * @type {Array.<->}
+   */
+  var renderedReviews = [];
+
+
+  /**
+  * Выводит список ревью
+  * @param {Array.<Object>} reviewsToRender
+  * @param {number} pageNumber
+  * @param {boolean=} replace
+  */
+
   function loadingReviews(reviewsToRender, pageNumber, replace) {
     // проверям тип переменной + тернарный оператор(что делать если ? выполняться: нет;)
     replace = typeof replace !== 'undefined' ? replace : true;
@@ -46,9 +61,13 @@
     pageNumber = pageNumber || 0;
 
     if (replace) {
-      reviewContainer.classList.remove('invisible');
+      var el;
+      while ((el = renderedReviews.shift())) {
       // чистим контейнер
-      reviewContainer.innerHTML = '';
+      el.unrender();
+      }
+
+      reviewContainer.classList.remove('invisible');
     }
 
     // выбираем размер страницы
@@ -62,7 +81,7 @@
     reviewsToRender.forEach(function(reviewData) {
       var newReviewData = new Review(reviewData);
       newReviewData.render(reviewsFragment);
-      //renderedReviews.push(newReviewData);
+      renderedReviews.push(newReviewData);
     });
 
 //  загрузка фрагметна
