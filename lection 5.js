@@ -1,4 +1,30 @@
+json
+axaj
 
+document.fragment
+
+var loaderData = null
+xhr
+
+пятисотить
+православный код
+тертый калач
+
+arr.map(function(el,index,array){
+
+});
+
+
+arr.some(function (el,index,array) {
+  один из массива соотвецтвует кретерию(как только тру конец иитерации и запись тру)
+}); >true/false
+arr.every(function(el,index,array){
+  весь масив соответствует критерию
+}); >true/false
+
+
+
+-----------------
 постраничное изображение списка отелей
 arr.slice(0) копирует массив
 array.slice(от число, до число)
