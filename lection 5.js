@@ -22,6 +22,29 @@ arr.every(function(el,index,array){
   весь масив соответствует критерию
 }); >true/false
 
+arr.reduce(function(prevValue, item){
+  return prevValue + item;
+}, 0);   prevValue = 0(в начале или преведудущий шаг)
+
+
+arr.sort(
+  function(a, b) {
+    return a - b;
+  }
+); >>>> если верулась -  то ф должана быть раньше, если + то в конец
+
+if (a > b) {
+  return -1;
+}
+
+var oper =
+
+ switch(oper) {
+   case '1': result = что делаем;
+   break;
+ }
+
+
 
 
 -----------------
