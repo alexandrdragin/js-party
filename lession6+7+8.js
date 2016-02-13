@@ -58,6 +58,13 @@ initEvent('click');
 
 7
 
+рефакторинг - расшенение фунционала без боли
+function Photo(data) {
+  this._data = data;
+}
+
+Photo.prototype.rednerthatshit
+
 
 
 
