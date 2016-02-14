@@ -66,10 +66,6 @@ function Photo(data) {
 Photo.prototype.rednerthatshit
 
 
-
-
-
-
 8
 графика и медиа
 -svg
