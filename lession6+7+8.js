@@ -56,7 +56,7 @@ initEvent('click');
 
 
 
-7
+7 ооп инкапсуляция
 
 рефакторинг - расшенение фунционала без боли
 function Photo(data) {
@@ -66,7 +66,21 @@ function Photo(data) {
 Photo.prototype.rednerthatshit
 
 
-8
+8 ооп полиморфизм наследование 
+
+.shift уменьшает массив на элемент
+var el;
+while ((el = массив.shift())){
+
+}
+
+
+
+
+
+
+
+
 графика и медиа
 -svg
 -canvas
