@@ -1,5 +1,11 @@
-Ok, it's deposit for JSintensive
+/* Для устройств меньше, чем 400px: */
+body {
+    background-image: url('img_smallflower.jpg');
+}
 
-and i hope it's working well
-
-lession 2(dom and git)
+/* Для устройств 400px и больше: */
+@media only screen and (min-device-width: 400px) {
+    body {
+        background-image: url('img_flowers.jpg');
+    }
+}
