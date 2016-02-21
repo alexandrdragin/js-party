@@ -18,6 +18,11 @@ obj.addEventListener('click', function(evt)) {
 
 };
 
+window.addEventListener('click', function(evt) {
+//evt.preventDefault();
+     console.log(evt.target);
+   });
+
 obj.removeEventListener('click', function(evt)) { //удалить только если функция именная
 
 }
@@ -66,7 +71,7 @@ function Photo(data) {
 Photo.prototype.rednerthatshit
 
 
-8 ооп полиморфизм наследование 
+8 ооп полиморфизм наследование
 
 .shift уменьшает массив на элемент
 var el;
