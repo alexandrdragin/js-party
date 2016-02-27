@@ -71,6 +71,11 @@ function Photo(data) {
 Photo.prototype.rednerthatshit
 
 
+[].forEach.call(КОНТЕКСТ, ФункцияФорича {});
+
+привязывай аддЕвенты!
+
+
 8 ооп полиморфизм наследование
 
 .shift уменьшает массив на элемент
@@ -79,14 +84,10 @@ while ((el = массив.shift())){
 
 }
 
+9
 
+защита
+mvc
+localstorage
 
-
-
-
-
-
-графика и медиа
--svg
--canvas
--HTMLMediaElement
+JSON.stringify(ОБЬЕКТ) любой обьект в ждейсон
