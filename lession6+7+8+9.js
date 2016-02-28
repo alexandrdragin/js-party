@@ -90,4 +90,43 @@ while ((el = массив.shift())){
 mvc
 localstorage
 
+window.location;  в адрестную строку
+history.pushState(null, null, 'www.com'); //дописывается в адресс
+
+
+
+
+
+location.hash = location.hash.indexOf('map') !== -1 ? '' : 'map'; // дописывает в хеш
+//слово мап или ничего если мап уже есть
+// это вместо show
+
+window.addEventListener('hashchange', this._onHashChange.bind(this)); // новый обработчик
+this.restoreFromHash()
+
+.prototype._onHashChange = function() {
+  this.restoreFromHash(); //  вызываем при изменении страницы и после загрузки
+}
+
+.prototype.restoreFromHash = function() {
+   this.show(location.hash.indexOf('map') === -1); // метод проверки есть ли в адресе слово MAP после # 
+   //оправляет false или тrue
+}
+
+
+
+
+
+window.addEventListener('hashchange', function() {
+  restoreFromHash();
+});
+
+function restoreFromHash() {
+  console.log(nowCreatedObjectPhoto);
+  //проверка
+}
+
+
+
+
 JSON.stringify(ОБЬЕКТ) любой обьект в ждейсон
